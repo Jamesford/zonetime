@@ -69,52 +69,60 @@ export default class TimezoneClock extends React.Component {
     })
 
     return (
-      <div className='clock'>
-        {tick && this.renderMinuteTicker(now)}
+      <div className='wrapper'>
+        <div className='clock'>
+          {tick && this.renderMinuteTicker(now)}
 
-        <div className='columns'>
-          <div className='zones'>
-            {
-              timezones.map((tz, x) => <section className='meta' key={tz}>{tz.split('/')[1]}{tz === htz ? '*' : ''}<br />{now.tz(tz).format('HH:mm')}</section>)
-            }
-          </div>
+          <div className='columns'>
+            <div className='zones'>
+              {
+                timezones.map((tz, x) => <section className='meta' key={tz}>{tz.split('/')[1]}{tz === htz ? '*' : ''}<br />{now.tz(tz).format('HH:mm')}</section>)
+              }
+            </div>
 
-          <div className='hours'>
-            {
-              timezones.map((tz, x) => (
-                <div className='zone' key={tz}>
-                  {
-                    range(24).map(i => {
-                      const time = start.clone().tz(tz).add(i, 'hours')
-                      let className = 'hour'
+            <div className='hours'>
+              {
+                timezones.map((tz, x) => (
+                  <div className='zone' key={tz}>
+                    {
+                      range(24).map(i => {
+                        const time = start.clone().tz(tz).add(i, 'hours')
+                        let className = 'hour'
 
-                      // This Hour
-                      if (time.hour() === now.tz(tz).hour()) className += ' now'
+                        // This Hour
+                        if (time.hour() === now.tz(tz).hour()) className += ' now'
 
-                      // Hour in first or last timezone
-                      if (x === 0) className += ' first'
-                      if (x === timezones.length - 1) className += ' last'
+                        // Hour in first or last timezone
+                        if (x === 0) className += ' first'
+                        if (x === timezones.length - 1) className += ' last'
 
-                      // Working Hours
-                      if (time.hour() > 8 && time.hour() < 18) className += ' working'
+                        // Working Hours
+                        if (time.hour() > 8 && time.hour() < 18) className += ' working'
 
-                      return time.hour() === 0
-                        ? <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('MMM')}<br />{time.format('D')}</span></div></section>
-                        : <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('H')}</span></div></section>
-                    })
-                  }
-                </div>
-              ))
-            }
+                        return time.hour() === 0
+                          ? <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('MMM')}<br />{time.format('D')}</span></div></section>
+                          : <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('H')}</span></div></section>
+                      })
+                    }
+                  </div>
+                ))
+              }
+            </div>
           </div>
         </div>
 
         <style jsx>{`
+          .wrapper {
+            display: flex;
+            justify-content: center;
+          }
           .clock {
             background: #fff;
             border-radius: 2px;
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             padding: 5px;
+            width: 1600px;
+            min-width: 300px;
           }
           .columns {
             display: flex;
