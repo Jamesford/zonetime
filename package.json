@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "zonetime",
+  "version": "0.1.0",
+  "description": "Timezone Clock",
+  "author": "Jamesford",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "preexport": "npm run build",
+    "export": "next export",
+    "prestart": "npm run export",
+    "start": "serve out"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "moment": "^2.20.1",
+    "moment-timezone": "^0.5.14",
+    "next": "^4.2.3",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "serve": "^6.4.8"
+  }
+}
