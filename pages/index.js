@@ -108,6 +108,26 @@ export default class Index extends React.Component {
           .card .select {
             flex-grow: 1;
           }
+          @media screen and (min-width:650px) and (max-width:900px){
+            .card .select {
+              width: 100%;
+            }
+          }
+          @media screen and (max-width:649px){
+            .card {
+              flex-direction: column;
+              align-items: stretch;
+            }
+            .card .opt {
+              margin: 5px 0;
+            }
+            .card .opt:first-child {
+              margin-top: 0;
+            }
+            .card .opt:last-child {
+              margin-bottom: 0;
+            }
+          }
         `}</style>
       </Layout>
     )
