@@ -3,12 +3,17 @@ import moment from 'moment-timezone'
 import range from 'lodash/range'
 
 export default class TimezoneClock extends React.Component {
+  static defaultProps = {
+    timezones: [],
+    minuteTicker: true,
+    displayHtz: true
+  };
+
   constructor (props) {
     super(props)
 
     this.state = {
-      now: moment(),
-      tick: true
+      now: moment()
     }
 
     this.interval = null
@@ -55,13 +60,14 @@ export default class TimezoneClock extends React.Component {
   }
 
   render () {
-    const { now, tick } = this.state
+    const { now } = this.state
+    const { timezones, minuteTicker, displayHtz } = this.props
+
     const htz = moment.tz.guess()
     const start = moment().tz(htz).startOf('day')
-    const timezones = ['Asia/Shanghai', 'Europe/Berlin', 'America/New_York']
 
     // Ensure user's current timezone is shown
-    if (!timezones.includes(htz)) timezones.push(htz)
+    if (displayHtz && !timezones.includes(htz)) timezones.push(htz)
 
     // Sort into offset order
     timezones.sort((a, b) => {
@@ -69,60 +75,52 @@ export default class TimezoneClock extends React.Component {
     })
 
     return (
-      <div className='wrapper'>
-        <div className='clock'>
-          {tick && this.renderMinuteTicker(now)}
+      <div className='clock'>
+        {minuteTicker && this.renderMinuteTicker(now)}
 
-          <div className='columns'>
-            <div className='zones'>
-              {
-                timezones.map((tz, x) => <section className='meta' key={tz}>{tz.split('/')[1]}{tz === htz ? '*' : ''}<br />{now.tz(tz).format('HH:mm')}</section>)
-              }
-            </div>
+        <div className='columns'>
+          <div className='zones'>
+            {
+              timezones.map((tz, x) => <section className='meta' key={tz}>{tz.split('/')[1]}{tz === htz ? '*' : ''}<br />{now.tz(tz).format('HH:mm')}</section>)
+            }
+          </div>
 
-            <div className='hours'>
-              {
-                timezones.map((tz, x) => (
-                  <div className='zone' key={tz}>
-                    {
-                      range(24).map(i => {
-                        const time = start.clone().tz(tz).add(i, 'hours')
-                        let className = 'hour'
+          <div className='hours'>
+            {
+              timezones.map((tz, x) => (
+                <div className='zone' key={tz}>
+                  {
+                    range(24).map(i => {
+                      const time = start.clone().tz(tz).add(i, 'hours')
+                      let className = 'hour'
 
-                        // This Hour
-                        if (time.hour() === now.tz(tz).hour()) className += ' now'
+                      // This Hour
+                      if (time.hour() === now.tz(tz).hour()) className += ' now'
 
-                        // Hour in first or last timezone
-                        if (x === 0) className += ' first'
-                        if (x === timezones.length - 1) className += ' last'
+                      // Hour in first or last timezone
+                      if (x === 0) className += ' first'
+                      if (x === timezones.length - 1) className += ' last'
 
-                        // Working Hours
-                        if (time.hour() > 8 && time.hour() < 18) className += ' working'
+                      // Working Hours
+                      if (time.hour() > 8 && time.hour() < 18) className += ' working'
 
-                        return time.hour() === 0
-                          ? <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('MMM')}<br />{time.format('D')}</span></div></section>
-                          : <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('H')}</span></div></section>
-                      })
-                    }
-                  </div>
-                ))
-              }
-            </div>
+                      return time.hour() === 0
+                        ? <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('MMM')}<br />{time.format('D')}</span></div></section>
+                        : <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('H')}</span></div></section>
+                    })
+                  }
+                </div>
+              ))
+            }
           </div>
         </div>
 
         <style jsx>{`
-          .wrapper {
-            display: flex;
-            justify-content: center;
-          }
           .clock {
             background: #fff;
             border-radius: 2px;
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             padding: 5px;
-            width: 1600px;
-            min-width: 300px;
           }
           .columns {
             display: flex;
