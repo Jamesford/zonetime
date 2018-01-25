@@ -5,6 +5,7 @@ import Toggle from 'react-toggle'
 import Layout from '../components/Layout'
 import LoadingClock from '../components/LoadingClock'
 import TimezoneClock from '../components/TimezoneClock'
+import HomeIcon from '../components/HomeIcon'
 import tzOptions from '../utils/timezones'
 
 
@@ -29,6 +30,13 @@ export default class Index extends React.Component {
     })
   }
 
+  onRemoveTimezone = (option) => {
+    const { timezones } = this.state
+    this.setState({
+      timezones: timezones.filter(tz => tz !== option)
+    })
+  }
+
   onToggle = (evt) => {
     const { name, checked } = evt.target
     this.setState({
@@ -48,10 +56,13 @@ export default class Index extends React.Component {
             timezones={timezones}
             minuteTicker={minuteTicker}
             displayHtz={displayHtz}
+            onRemove={this.onRemoveTimezone}
           />
         </NoSSR>
 
-        <small>* Your estimated timezone</small>
+        <small className='definition'>
+          <HomeIcon fill='rgba(51, 51, 51, 0.7)' /> = your timezone (est)
+        </small>
 
         <div className='card'>
           <div className='opt select'>
@@ -79,7 +90,7 @@ export default class Index extends React.Component {
               onChange={this.onToggle}
               icons={false}
             />
-            <span>Always Show Estimated Timezone</span>
+            <span>Always Show My Timezone</span>
           </label>
         </div>
 
@@ -112,6 +123,11 @@ export default class Index extends React.Component {
           }
           .card .select {
             flex-grow: 1;
+          }
+          .definition {
+            display: block;
+            margin: 5px 0 0 0;
+            color: rgba(51, 51, 51, 0.7);
           }
           @media screen and (min-width:650px) and (max-width:900px){
             .card .select {

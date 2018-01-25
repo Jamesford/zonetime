@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment-timezone'
 import range from 'lodash/range'
+import HomeIcon from './HomeIcon'
 
 export default class TimezoneClock extends React.Component {
   static defaultProps = {
@@ -18,6 +19,7 @@ export default class TimezoneClock extends React.Component {
 
     this.interval = null
     this.tick = this.tick.bind(this)
+    this.onRemove = this.onRemove.bind(this)
   }
 
   componentDidMount () {
@@ -30,6 +32,12 @@ export default class TimezoneClock extends React.Component {
 
   tick () {
     this.setState({ now: moment() })
+  }
+
+  onRemove (e) {
+    const { tz } = e.target.dataset
+    const { onRemove } = this.props
+    if (onRemove) onRemove(tz)
   }
 
   renderMinuteTicker (now) {
@@ -81,7 +89,17 @@ export default class TimezoneClock extends React.Component {
         <div className='columns'>
           <div className='zones'>
             {
-              timezones.map((tz, x) => <section className='meta' key={tz}>{tz.split('/')[1]}{tz === htz ? '*' : ''}<br />{now.tz(tz).format('HH:mm')}</section>)
+              timezones.map((tz, x) => (
+                <section className='meta' key={tz}>
+                  { (tz !== htz || !displayHtz) &&
+                    <div className='remove' data-tz={tz} onClick={this.onRemove}>&times;</div>
+                  }
+
+                  { tz === htz && <div className='home'><HomeIcon /></div> }
+
+                  {tz.split('/')[1]}<br />{now.tz(tz).format('HH:mm')}
+                </section>
+              ))
             }
           </div>
 
@@ -136,7 +154,7 @@ export default class TimezoneClock extends React.Component {
             border-right: 1px solid rgb(238, 238, 238);
           }
           .zone {
-            height: 100px;
+            height: 101px;
             display: flex;
           }
           .meta,
@@ -148,6 +166,7 @@ export default class TimezoneClock extends React.Component {
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
             height: 100px;
             width: 100px;
             border-top: 1px solid rgb(238, 238, 238);
@@ -157,13 +176,34 @@ export default class TimezoneClock extends React.Component {
           .meta:last-child {
             border-bottom: 1px solid rgb(238, 238, 238)
           }
+          .meta .remove {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            color: rgba(51, 51, 51, 0.25);
+            padding: 0px 5px;
+            border-left: 1px solid rgb(238, 238, 238);
+            border-bottom: 1px solid rgb(238, 238, 238);
+          }
+          .meta .remove:hover {
+            color: rgba(255, 87, 34, 1);
+          }
+          .meta .home {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(51, 51, 51, 0.25);
+            padding: 3px;
+          }
 
           .hour {
             position: relative;
+            box-sizing: border-box;
             min-width: 40px;
             flex-basis: 1px;
             flex-grow: 1;
-            height: 100px;
+            height: 101px;
             border-right: 1px solid rgb(238, 238, 238);
           }
           .hour:last-child {
@@ -184,8 +224,8 @@ export default class TimezoneClock extends React.Component {
             border-bottom: 1px solid rgb(238, 238, 238);
           }
           .hour.now {
-            border-left: 2px solid #3F51B5 !important;
-            border-right: 2px solid #3F51B5 !important;
+              border-left: 2px solid #3F51B5 !important;
+              border-right: 2px solid #3F51B5 !important;
           }
           .hour.now.first {
             border-top: 2px solid #3F51B5 !important;
