@@ -97,7 +97,7 @@ export default class TimezoneClock extends React.Component {
 
                   { tz === htz && <div className='home'><HomeIcon /></div> }
 
-                  {tz.split('/')[1]}<br />{now.tz(tz).format('HH:mm')}
+                  {tz.split('/')[1].replace('_', ' ')}<br />{now.tz(tz).format('HH:mm')}
                 </section>
               ))
             }
