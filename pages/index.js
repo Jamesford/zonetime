@@ -8,16 +8,39 @@ import TimezoneClock from '../components/TimezoneClock'
 import HomeIcon from '../components/HomeIcon'
 import tzOptions from '../utils/timezones'
 
-
 export default class Index extends React.Component {
-  state = {
-    timezones: [
-      'Asia/Shanghai',
-      'Europe/Berlin',
-      'America/New_York'
-    ],
-    minuteTicker: true,
-    displayHtz: true
+  constructor (props) {
+    super(props)
+
+    this.state = this.loadSettings()
+  }
+
+  static DefaultSettings = () => {
+    return {
+      timezones: [
+        'Asia/Shanghai',
+        'Europe/Berlin',
+        'America/New_York'
+      ],
+      minuteTicker: true,
+      displayHtz: true
+    }
+  }
+
+  saveSettings = () => {
+    if (process.browser) {
+      console.log('saving settings', this.state)
+      localStorage.setItem('settings', JSON.stringify(this.state))
+    }
+  }
+
+  loadSettings = () => {
+    if (process.browser) {
+      const saved = JSON.parse(localStorage.getItem('settings'))
+      console.log('loading settings', saved)
+      return saved ? saved : Index.DefaultSettings()
+    }
+    return Index.DefaultSettings()
   }
 
   onTimezone = (option) => {
@@ -27,21 +50,21 @@ export default class Index extends React.Component {
         ...timezones,
         option.value
       ]
-    })
+    }, this.saveSettings)
   }
 
   onRemoveTimezone = (option) => {
     const { timezones } = this.state
     this.setState({
       timezones: timezones.filter(tz => tz !== option)
-    })
+    }, this.saveSettings)
   }
 
   onToggle = (evt) => {
     const { name, checked } = evt.target
     this.setState({
       [name]: checked
-    })
+    }, this.saveSettings)
   }
 
   render () {
@@ -74,22 +97,26 @@ export default class Index extends React.Component {
           </div>
 
           <label className='opt'>
-            <Toggle
-              name='minuteTicker'
-              checked={minuteTicker}
-              onChange={this.onToggle}
-              icons={false}
-            />
+            <NoSSR onSSR={<Toggle checked={true} icons={false} readOnly />}>
+              <Toggle
+                name='minuteTicker'
+                checked={minuteTicker}
+                onChange={this.onToggle}
+                icons={false}
+              />
+            </NoSSR>
             <span>Show Minute Ticker</span>
           </label>
 
           <label className='opt'>
-            <Toggle
-              name='displayHtz'
-              checked={displayHtz}
-              onChange={this.onToggle}
-              icons={false}
-            />
+            <NoSSR onSSR={<Toggle checked={true} icons={false} readOnly />}>
+              <Toggle
+                name='displayHtz'
+                checked={displayHtz}
+                onChange={this.onToggle}
+                icons={false}
+              />
+            </NoSSR>
             <span>Always Show My Timezone</span>
           </label>
         </div>
