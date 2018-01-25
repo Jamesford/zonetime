@@ -1,9 +1,12 @@
 import React from 'react'
+import NoSSR from 'react-no-ssr'
 import Select from 'react-select'
 import Toggle from 'react-toggle'
 import Layout from '../components/Layout'
+import LoadingClock from '../components/LoadingClock'
 import TimezoneClock from '../components/TimezoneClock'
 import tzOptions from '../utils/timezones'
+
 
 export default class Index extends React.Component {
   state = {
@@ -40,11 +43,13 @@ export default class Index extends React.Component {
       <Layout>
         <h1>Zonetime <code>(beta)</code></h1>
 
-        <TimezoneClock
-          timezones={timezones}
-          minuteTicker={minuteTicker}
-          displayHtz={displayHtz}
-        />
+        <NoSSR onSSR={<LoadingClock />}>
+          <TimezoneClock
+            timezones={timezones}
+            minuteTicker={minuteTicker}
+            displayHtz={displayHtz}
+          />
+        </NoSSR>
 
         <small>* Your estimated timezone</small>
 

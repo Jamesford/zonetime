@@ -835,7 +835,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@6.x.x, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -3923,6 +3923,12 @@ react-input-autosize@^2.1.2:
   resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.1.tgz#ec428fa15b1592994fb5f9aa15bb1eb6baf420f8"
   dependencies:
     prop-types "^15.5.8"
+
+react-no-ssr@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-no-ssr/-/react-no-ssr-1.1.0.tgz#313b48d2e26020f969ed98e472f10481604e3cc8"
+  dependencies:
+    babel-runtime "6.x.x"
 
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
