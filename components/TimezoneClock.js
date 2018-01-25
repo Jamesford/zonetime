@@ -89,7 +89,8 @@ export default class TimezoneClock extends React.Component {
             {
               timezones.map((tz, x) => (
                 <div className='zone' key={tz}>
-                  {
+                  {/* process.browser Hack fixes current-hour stuck to deploy time bug */}
+                  { process.browser &&
                     range(24).map(i => {
                       const time = start.clone().tz(tz).add(i, 'hours')
                       let className = 'hour'
