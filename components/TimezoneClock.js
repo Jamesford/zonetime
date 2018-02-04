@@ -54,7 +54,7 @@ export default class TimezoneClock extends React.Component {
           bottom: 0;
         }
         .hour.now:before {
-          background: #505050;
+          background: #303030;
           opacity: 0.6;
           left: 50%;
           z-index: 0;
@@ -153,7 +153,7 @@ export default class TimezoneClock extends React.Component {
             display: flex;
             flex-direction: column;
             overflow: auto;
-            border-right: 1px solid #505050;
+            border-right: 1px solid #303030;
           }
           .zone {
             height: 101px;
@@ -171,12 +171,12 @@ export default class TimezoneClock extends React.Component {
             position: relative;
             height: 100px;
             width: 100px;
-            border-top: 1px solid #505050;
-            border-right: 1px solid #505050;
-            border-left: 1px solid #505050;
+            border-top: 1px solid #303030;
+            border-right: 1px solid #303030;
+            border-left: 1px solid #303030;
           }
           .meta:last-child {
-            border-bottom: 1px solid #505050
+            border-bottom: 1px solid #303030
           }
           .meta .remove {
             position: absolute;
@@ -185,8 +185,8 @@ export default class TimezoneClock extends React.Component {
             cursor: pointer;
             color: rgba(120, 120, 120, 0.5);
             padding: 0px 5px;
-            // border-left: 1px solid #505050;
-            // border-bottom: 1px solid #505050;
+            // border-left: 1px solid #303030;
+            // border-bottom: 1px solid #303030;
           }
           .meta .remove:hover {
             color: rgba(220, 90, 130, 1);
@@ -206,7 +206,7 @@ export default class TimezoneClock extends React.Component {
             flex-basis: 1px;
             flex-grow: 1;
             height: 101px;
-            border-right: 1px solid #505050;
+            border-right: 1px solid #303030;
           }
           .hour:last-child {
             border-right: none;
@@ -217,13 +217,13 @@ export default class TimezoneClock extends React.Component {
             display: flex;
             align-items: center;
             justify-content: center;
-            border-top: 1px solid #505050;
+            border-top: 1px solid #303030;
           }
           .hour .inner span {
             z-index: 2;
           }
           .zone:last-child .hour {
-            border-bottom: 1px solid #505050;
+            border-bottom: 1px solid #303030;
           }
           .hour.now {
               border-left: 2px solid #8378F4 !important;
@@ -239,7 +239,7 @@ export default class TimezoneClock extends React.Component {
             border-bottom: 2px solid #8378F4 !important;
           }
           .hour.working {
-            background: rgba(220, 90, 130, 0.07);
+            background: rgba(220, 175, 255, 0.1);
           }
         `}</style>
       </div>
