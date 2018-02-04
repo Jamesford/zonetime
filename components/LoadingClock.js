@@ -6,11 +6,11 @@ export default class LoadingClock extends React.Component {
     return (
       <div className='clock'>
 
-      <Loader color='#ababab' />
+      <Loader color='#59D9A4' />
 
       <style jsx>{`
         .clock {
-          background: #fff;
+          background: #34373c;
           border-radius: 2px;
           box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
           padding: 5px;

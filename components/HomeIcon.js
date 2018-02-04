@@ -1,5 +1,5 @@
 export default ({ fill }) => (
-  <svg x='0px' y='0px' width='15' height='15' viewBox='0 0 611.997 611.998' style={{fill: fill ? fill : 'rgba(51,51,51,0.25)', enableBackground: 'new 0 0 611.997 611.998'}}>
+  <svg x='0px' y='0px' width='15' height='15' viewBox='0 0 611.997 611.998' style={{fill: fill ? fill : 'rgba(120, 120, 120, 0.7)', enableBackground: 'new 0 0 611.997 611.998'}}>
     <g>
       <g>
         <path d='M511.114,300.251c-9.94,0-17.638,7.663-17.638,17.651v241.105H368.401v-98.453c0-9.236-7.697-17.31-17.002-17.31h-90.435

@@ -54,12 +54,14 @@ export default class TimezoneClock extends React.Component {
           bottom: 0;
         }
         .hour.now:before {
-          background: rgba(240, 240, 240, 0.6);
+          background: #505050;
+          opacity: 0.6;
           left: 50%;
           z-index: 0;
         }
         .hour.now:after {
-          background: rgba(255, 87, 34, 0.6);
+          // background: rgba(255, 87, 34, 0.6);
+          background: #59D9A4;
           left: ${hourPrct}%;
           z-index: 1;
         }
@@ -135,7 +137,7 @@ export default class TimezoneClock extends React.Component {
 
         <style jsx>{`
           .clock {
-            background: #fff;
+            background: #34373c;
             border-radius: 2px;
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             padding: 5px;
@@ -151,7 +153,7 @@ export default class TimezoneClock extends React.Component {
             display: flex;
             flex-direction: column;
             overflow: auto;
-            border-right: 1px solid rgb(238, 238, 238);
+            border-right: 1px solid #505050;
           }
           .zone {
             height: 101px;
@@ -169,25 +171,25 @@ export default class TimezoneClock extends React.Component {
             position: relative;
             height: 100px;
             width: 100px;
-            border-top: 1px solid rgb(238, 238, 238);
-            border-right: 1px solid rgb(238, 238, 238);
-            border-left: 1px solid rgb(238, 238, 238);
+            border-top: 1px solid #505050;
+            border-right: 1px solid #505050;
+            border-left: 1px solid #505050;
           }
           .meta:last-child {
-            border-bottom: 1px solid rgb(238, 238, 238)
+            border-bottom: 1px solid #505050
           }
           .meta .remove {
             position: absolute;
-            top: 0;
+            top: -2px;
             right: 0;
             cursor: pointer;
-            color: rgba(51, 51, 51, 0.25);
+            color: rgba(120, 120, 120, 0.5);
             padding: 0px 5px;
-            border-left: 1px solid rgb(238, 238, 238);
-            border-bottom: 1px solid rgb(238, 238, 238);
+            // border-left: 1px solid #505050;
+            // border-bottom: 1px solid #505050;
           }
           .meta .remove:hover {
-            color: rgba(255, 87, 34, 1);
+            color: rgba(220, 90, 130, 1);
           }
           .meta .home {
             position: absolute;
@@ -204,7 +206,7 @@ export default class TimezoneClock extends React.Component {
             flex-basis: 1px;
             flex-grow: 1;
             height: 101px;
-            border-right: 1px solid rgb(238, 238, 238);
+            border-right: 1px solid #505050;
           }
           .hour:last-child {
             border-right: none;
@@ -215,29 +217,29 @@ export default class TimezoneClock extends React.Component {
             display: flex;
             align-items: center;
             justify-content: center;
-            border-top: 1px solid rgb(238, 238, 238);
+            border-top: 1px solid #505050;
           }
           .hour .inner span {
             z-index: 2;
           }
           .zone:last-child .hour {
-            border-bottom: 1px solid rgb(238, 238, 238);
+            border-bottom: 1px solid #505050;
           }
           .hour.now {
-              border-left: 2px solid #3F51B5 !important;
-              border-right: 2px solid #3F51B5 !important;
+              border-left: 2px solid #8378F4 !important;
+              border-right: 2px solid #8378F4 !important;
           }
           .hour.now.first {
-            border-top: 2px solid #3F51B5 !important;
+            border-top: 2px solid #8378F4 !important;
           }
           .hour.now.first .inner {
             border-top: none;
           }
           .hour.now.last {
-            border-bottom: 2px solid #3F51B5 !important;
+            border-bottom: 2px solid #8378F4 !important;
           }
           .hour.working {
-            background: rgba(255, 250, 220, 0.55);
+            background: rgba(220, 90, 130, 0.07);
           }
         `}</style>
       </div>

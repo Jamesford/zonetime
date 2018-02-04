@@ -7,8 +7,8 @@ export default () => (
     <link rel='stylesheet' type='text/css' href='/static/style.css' />
     <style>{`
       html {
-        background: #efefef;
-        color: #333;
+        background: #141518;
+        color: #eee;
         font-family: sans-serif;
       }
     `}</style>

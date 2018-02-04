@@ -84,7 +84,7 @@ export default class Index extends React.Component {
         </NoSSR>
 
         <small className='definition'>
-          <HomeIcon fill='rgba(51, 51, 51, 0.7)' /> = your timezone (est)
+          <HomeIcon fill='rgba(120, 120, 120, 0.7)' /> = your timezone (est)
         </small>
 
         <div className='card'>
@@ -123,7 +123,7 @@ export default class Index extends React.Component {
 
         <style jsx>{`
           .card {
-            background: #fff;
+            background: #34373c;
             border-radius: 2px;
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             margin: 1em 0;
@@ -154,7 +154,7 @@ export default class Index extends React.Component {
           .definition {
             display: block;
             margin: 5px 0 0 0;
-            color: rgba(51, 51, 51, 0.7);
+            color: rgba(120, 120, 120, 0.7);
           }
           @media screen and (min-width:650px) and (max-width:900px){
             .card .select {
