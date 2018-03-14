@@ -7,6 +7,7 @@ import LoadingClock from '../components/LoadingClock'
 import TimezoneClock from '../components/TimezoneClock'
 import HomeIcon from '../components/HomeIcon'
 import tzOptions from '../utils/timezones'
+import Modal from '../components/Modal'
 
 export default class Index extends React.Component {
   constructor (props) {
@@ -72,6 +73,8 @@ export default class Index extends React.Component {
 
     return (
       <Layout>
+        <Modal />
+
         <h1>Zonetime <code>(beta)</code></h1>
 
         <NoSSR onSSR={<LoadingClock />}>
