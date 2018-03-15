@@ -15,7 +15,7 @@ export default ({ onClose, timezones }) => (
 
         <section className='timezones'>
           {timezones.map(timezone => (
-            <div className='timezone'>
+            <div className='timezone' key={timezone.value}>
               <span>{timezone.label}</span>
             </div>
           ))}

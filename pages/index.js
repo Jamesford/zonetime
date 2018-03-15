@@ -48,26 +48,36 @@ export default class Index extends React.Component {
   }
 
   onTimezone = (option) => {
-    const { timezones } = this.state.settings
+    const { settings } = this.state
     this.setState({
-      timezones: [
-        ...timezones,
-        option.value
-      ]
+      settings: {
+        ...settings,
+        timezones: [
+          ...settings.timezones,
+          option.value
+        ]
+      }
     }, this.saveSettings)
   }
 
   onRemoveTimezone = (option) => {
-    const { timezones } = this.state.settings
+    const { settings } = this.state
     this.setState({
-      timezones: timezones.filter(tz => tz !== option)
+      settings: {
+        ...settings,
+        timezones: settings.timezones.filter(tz => tz !== option)
+      }
     }, this.saveSettings)
   }
 
   onToggle = (evt) => {
     const { name, checked } = evt.target
+    const { settings } = this.state
     this.setState({
-      [name]: checked
+      settings: {
+        ...settings,
+        [name]: checked
+      }
     }, this.saveSettings)
   }
 
