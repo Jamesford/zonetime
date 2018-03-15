@@ -1,51 +1,30 @@
-export default ({ onClose }) => (
-  <div className='modal-bg' onClick={onClose}>
+export default ({ onClose, timezones }) => (
+  <div className='modal-wrapper'>
+    <div className='modal-bg' onClick={onClose} />
+
     <div className='modal-fg'>
-      <h1>Add a timezone</h1>
+      <header className='modal-fg-header'>
+        <h1>Timezones</h1>
+        <button className='close' onClick={onClose}>&times;</button>
+      </header>
 
       <div className='select-container'>
         <section className='search'>
-          <input type='text' placeholder='search' />
+          <input type='text' placeholder='Filter timezones...' />
         </section>
 
         <section className='timezones'>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
-          <div className='timezone'><span>Asia/Shanghai</span></div>
+          {timezones.map(timezone => (
+            <div className='timezone'>
+              <span>{timezone.label}</span>
+            </div>
+          ))}
         </section>
       </div>
     </div>
 
     <style jsx>{`
+      .modal-wrapper,
       .modal-bg {
         position: fixed;
         top: 0;
@@ -53,22 +32,47 @@ export default ({ onClose }) => (
         bottom 0;
         left: 0;
         z-index: 990;
-        background: rgba(0,0,0,0.8);
+      }
+      .modal-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+      .modal-bg {
+        background: rgba(0,0,0,0.4);
       }
       .modal-fg {
         display: flex;
         flex-direction: column;
         background: white;
         border-radius: 5px;
-        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-        margin: 5px;
+        box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+        margin: 15px;
         padding: 10px 20px;
         height: 80vh;
-        width: 800px;
-        z-index: 999
+        width: 400px;
+        z-index: 999;
+        font-weight: 300;
+      }
+      .modal-fg-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      h1 {
+        font-weight: 300;
+      }
+      .close {
+        cursor: pointer;
+        border-radius: 50%;
+        background: hsl(220, 12%, 95%);
+        width: 25px;
+        height: 25px;
+        border: none;
+      }
+      .close:hover {
+        box-shadow: 0 2px 3px 0 hsla(0, 0%, 0%, 0.2);
       }
       .select-container {
         flex-grow: 1;
@@ -77,22 +81,37 @@ export default ({ onClose }) => (
       }
       .search {
         display: flex;
-        height: 50px;
         margin-bottom: 10px;
+        flex-shrink: 0;
+        height: 50px;
       }
       .search > input {
         flex-grow: 1;
+        background: hsl(220, 12%, 95%);
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        padding: 0 20px;
+      }
+      .search > input:focus {
+        outline: none;
+        box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.08);
       }
       .timezones {
         flex-grow: 1;
         overflow-y: scroll;
       }
       .timezone {
+        cursor: pointer;
         display: flex;
         align-items: center;
         height: 50px;
-        padding: 5px 0;
-        border-bottom: 1px solid lightgrey;
+        border-radius: 5px;
+        padding: 5px 10px;
+      }
+      .timezone:hover {
+        background: rgb(236, 245, 251);
+        color: rgb(44, 107, 180);
       }
     `}</style>
   </div>

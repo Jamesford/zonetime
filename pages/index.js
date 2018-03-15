@@ -13,7 +13,10 @@ export default class Index extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = this.loadSettings()
+    this.state = {
+      modal: true,
+      settings: this.loadSettings()
+    }
   }
 
   static DefaultSettings = () => {
@@ -30,8 +33,8 @@ export default class Index extends React.Component {
 
   saveSettings = () => {
     if (process.browser) {
-      console.log('saving settings', this.state)
-      localStorage.setItem('settings', JSON.stringify(this.state))
+      console.log('saving settings', this.state.settings)
+      localStorage.setItem('settings', JSON.stringify(this.state.settings))
     }
   }
 
@@ -45,7 +48,7 @@ export default class Index extends React.Component {
   }
 
   onTimezone = (option) => {
-    const { timezones } = this.state
+    const { timezones } = this.state.settings
     this.setState({
       timezones: [
         ...timezones,
@@ -55,7 +58,7 @@ export default class Index extends React.Component {
   }
 
   onRemoveTimezone = (option) => {
-    const { timezones } = this.state
+    const { timezones } = this.state.settings
     this.setState({
       timezones: timezones.filter(tz => tz !== option)
     }, this.saveSettings)
@@ -69,11 +72,12 @@ export default class Index extends React.Component {
   }
 
   render () {
-    const { timezones, minuteTicker, displayHtz } = this.state
+    const { modal } = this.state
+    const { timezones, minuteTicker, displayHtz } = this.state.settings
 
     return (
       <Layout>
-        <Modal />
+        {modal && <Modal onClose={() => this.setState({ modal: false })} timezones={tzOptions} />}
 
         <h1>Zonetime <code>(beta)</code></h1>
 
