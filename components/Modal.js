@@ -92,14 +92,25 @@ export default ({ onClose, timezones }) => (
         border-radius: 5px;
         font-size: 16px;
         padding: 0 20px;
+        box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.08);
+        border: 1px solid white;
       }
       .search > input:focus {
         outline: none;
-        box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.08);
+        border-color: dodgerblue;
       }
       .timezones {
         flex-grow: 1;
         overflow-y: scroll;
+        background:
+          linear-gradient(white 30%, rgba(255, 255, 255, 0)) 100% 0,
+          linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
+          radial-gradient(farthest-side at 50% 0%, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)) 100% 0,
+          radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)) 0 100%,
+          white;
+        background-repeat: no-repeat;
+        background-size: 100% 12px, 100% 12px, 100% 3px, 100% 3px;
+        background-attachment: local, local, scroll, scroll;
       }
       .timezone {
         cursor: pointer;
