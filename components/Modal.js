@@ -82,15 +82,19 @@ export default class Modal extends Component {
             </section>
 
             <section className="timezones">
-              {filteredTimezones.map(({ label, value }) => (
-                <Timezone
-                  key={value}
-                  label={label}
-                  value={value}
-                  onAdd={onAdd}
-                  onClose={onClose}
-                />
-              ))}
+              <div className="scrollable">
+                {filteredTimezones.map(({ label, value }) => (
+                  <Timezone
+                    key={value}
+                    label={label}
+                    value={value}
+                    onAdd={onAdd}
+                    onClose={onClose}
+                  />
+                ))}
+              </div>
+              <div className="shadow shadow-top" />
+              <div className="shadow shadow-bottom" />
             </section>
           </div>
         </div>
@@ -171,7 +175,30 @@ export default class Modal extends Component {
         }
         .timezones {
           flex-grow: 1;
+          position: relative;
+        }
+        .scrollable {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
           overflow-y: scroll;
+        }
+        .shadow {
+          position: absolute;
+          pointer-events: none;
+          left: 0;
+          right: 0;
+          height: 15px;
+          background-image: linear-gradient(rgba(255,255,255, 1), rgba(255,255,255, 0));
+        }
+        .shadow-top {
+          top: 0;
+        }
+        .shadow-bottom {
+          bottom: 0;
+          transform: rotate(180deg);
         }
       `}</style>
       </div>

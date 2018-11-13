@@ -1,6 +1,5 @@
 import React from 'react'
 import NoSSR from 'react-no-ssr'
-import Select from 'react-select'
 import Toggle from 'react-toggle'
 import Layout from '../components/Layout'
 import LoadingClock from '../components/LoadingClock'
