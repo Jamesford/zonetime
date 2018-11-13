@@ -8,9 +8,9 @@ export default class TimezoneClock extends React.Component {
     timezones: [],
     minuteTicker: true,
     displayHtz: true
-  };
+  }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -22,25 +22,25 @@ export default class TimezoneClock extends React.Component {
     this.onRemove = this.onRemove.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.interval = setInterval(this.tick, 1000)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     clearInterval(this.interval)
   }
 
-  tick () {
+  tick() {
     this.setState({ now: moment() })
   }
 
-  onRemove (e) {
+  onRemove(e) {
     const { tz } = e.target.dataset
     const { onRemove } = this.props
     if (onRemove) onRemove(tz)
   }
 
-  renderMinuteTicker (now) {
+  renderMinuteTicker(now) {
     const hourPrct = parseInt((now.minutes() / 60) * 100, 10)
     return (
       <style>{`
@@ -67,12 +67,14 @@ export default class TimezoneClock extends React.Component {
     )
   }
 
-  render () {
+  render() {
     const { now } = this.state
     const { timezones, minuteTicker, displayHtz } = this.props
 
     const htz = moment.tz.guess()
-    const start = moment().tz(htz).startOf('day')
+    const start = moment()
+      .tz(htz)
+      .startOf('day')
 
     // Ensure user's current timezone is shown
     if (displayHtz && !timezones.includes(htz)) timezones.push(htz)
@@ -83,53 +85,73 @@ export default class TimezoneClock extends React.Component {
     })
 
     return (
-      <div className='clock'>
+      <div className="clock">
         {minuteTicker && this.renderMinuteTicker(now)}
 
-        <div className='columns'>
-          <div className='zones'>
-            {
-              timezones.map((tz, x) => (
-                <section className='meta' key={tz}>
-                  { (tz !== htz || !displayHtz) &&
-                    <div className='remove' data-tz={tz} onClick={this.onRemove}>&times;</div>
-                  }
+        <div className="columns">
+          <div className="zones">
+            {timezones.map((tz, x) => (
+              <section className="meta" key={tz}>
+                {(tz !== htz || !displayHtz) && (
+                  <div className="remove" data-tz={tz} onClick={this.onRemove}>
+                    &times;
+                  </div>
+                )}
 
-                  { tz === htz && <div className='home'><HomeIcon /></div> }
+                {tz === htz && (
+                  <div className="home">
+                    <HomeIcon />
+                  </div>
+                )}
 
-                  {tz.split('/')[1].replace('_', ' ')}<br />{now.tz(tz).format('HH:mm')}
-                </section>
-              ))
-            }
+                {tz.split('/')[1].replace(/_/g, ' ')}
+                <br />
+                {now.tz(tz).format('HH:mm')}
+              </section>
+            ))}
           </div>
 
-          <div className='hours'>
-            {
-              timezones.map((tz, x) => (
-                <div className='zone' key={tz}>
-                  {
-                    range(24).map(i => {
-                      const time = start.clone().tz(tz).add(i, 'hours')
-                      let className = 'hour'
+          <div className="hours">
+            {timezones.map((tz, x) => (
+              <div className="zone" key={tz}>
+                {range(24).map(i => {
+                  const time = start
+                    .clone()
+                    .tz(tz)
+                    .add(i, 'hours')
+                  let className = 'hour'
 
-                      // This Hour
-                      if (time.hour() === now.tz(tz).hour()) className += ' now'
+                  // This Hour
+                  if (time.hour() === now.tz(tz).hour()) className += ' now'
 
-                      // Hour in first or last timezone
-                      if (x === 0) className += ' first'
-                      if (x === timezones.length - 1) className += ' last'
+                  // Hour in first or last timezone
+                  if (x === 0) className += ' first'
+                  if (x === timezones.length - 1) className += ' last'
 
-                      // Working Hours
-                      if (time.hour() > 8 && time.hour() < 18) className += ' working'
+                  // Working Hours
+                  if (time.hour() > 8 && time.hour() < 18)
+                    className += ' working'
 
-                      return time.hour() === 0
-                        ? <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('MMM')}<br />{time.format('D')}</span></div></section>
-                        : <section key={`${tz}-${time.hour()}`} className={className}><div className='inner'><span>{time.format('H')}</span></div></section>
-                    })
-                  }
-                </div>
-              ))
-            }
+                  return time.hour() === 0 ? (
+                    <section key={`${tz}-${time.hour()}`} className={className}>
+                      <div className="inner">
+                        <span>
+                          {time.format('MMM')}
+                          <br />
+                          {time.format('D')}
+                        </span>
+                      </div>
+                    </section>
+                  ) : (
+                    <section key={`${tz}-${time.hour()}`} className={className}>
+                      <div className="inner">
+                        <span>{time.format('H')}</span>
+                      </div>
+                    </section>
+                  )
+                })}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -137,7 +159,8 @@ export default class TimezoneClock extends React.Component {
           .clock {
             background: #fff;
             border-radius: 2px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+              0 3px 6px rgba(0, 0, 0, 0.23);
             padding: 5px;
           }
           .columns {
@@ -174,7 +197,7 @@ export default class TimezoneClock extends React.Component {
             border-left: 1px solid rgb(238, 238, 238);
           }
           .meta:last-child {
-            border-bottom: 1px solid rgb(238, 238, 238)
+            border-bottom: 1px solid rgb(238, 238, 238);
           }
           .meta .remove {
             position: absolute;
@@ -224,17 +247,17 @@ export default class TimezoneClock extends React.Component {
             border-bottom: 1px solid rgb(238, 238, 238);
           }
           .hour.now {
-              border-left: 2px solid #3F51B5 !important;
-              border-right: 2px solid #3F51B5 !important;
+            border-left: 2px solid #3f51b5 !important;
+            border-right: 2px solid #3f51b5 !important;
           }
           .hour.now.first {
-            border-top: 2px solid #3F51B5 !important;
+            border-top: 2px solid #3f51b5 !important;
           }
           .hour.now.first .inner {
             border-top: none;
           }
           .hour.now.last {
-            border-bottom: 2px solid #3F51B5 !important;
+            border-bottom: 2px solid #3f51b5 !important;
           }
           .hour.working {
             background: rgba(255, 250, 220, 0.55);
