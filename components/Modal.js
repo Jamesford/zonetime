@@ -1,4 +1,5 @@
 import React, { Component, PureComponent } from 'react'
+import debounce from 'lodash/debounce'
 
 class Timezone extends PureComponent {
   add = () => {
@@ -38,23 +39,29 @@ export default class Modal extends Component {
     super(props)
 
     this.state = {
-      search: ''
+      searchInput: '',
+      searchValue: ''
     }
   }
 
-  onSearch = e => {
-    this.setState({ search: e.target.value })
+  onSearchValue = debounce(value => {
+    this.setState({ searchValue: value })
+  }, 250)
+
+  onSearchInput = e => {
+    this.onSearchValue(e.target.value)
+    this.setState({ searchInput: e.target.value })
   }
 
   render() {
     const { timezones, selected, onAdd, onClose } = this.props
-    const { search } = this.state
+    const { searchInput, searchValue } = this.state
 
     const filteredTimezones = timezones.filter(
       ({ label, value }) =>
         !selected.includes(value) &&
-        (label.toLowerCase().includes(search.toLowerCase()) ||
-          value.toLowerCase().includes(search.toLowerCase()))
+        (label.toLowerCase().includes(searchValue.toLowerCase()) ||
+          value.toLowerCase().includes(searchValue.toLowerCase()))
     )
 
     return (
@@ -75,8 +82,8 @@ export default class Modal extends Component {
               <input
                 type="text"
                 placeholder="Filter timezones..."
-                value={search}
-                onChange={this.onSearch}
+                value={searchInput}
+                onChange={this.onSearchInput}
                 autoFocus
               />
             </section>
