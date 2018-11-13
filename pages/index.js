@@ -10,22 +10,18 @@ import tzOptions from '../utils/timezones'
 import Modal from '../components/Modal'
 
 export default class Index extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
-      modal: true,
+      modal: false,
       settings: this.loadSettings()
     }
   }
 
   static DefaultSettings = () => {
     return {
-      timezones: [
-        'Asia/Shanghai',
-        'Europe/Berlin',
-        'America/New_York'
-      ],
+      timezones: ['Asia/Shanghai', 'Europe/Berlin', 'America/New_York'],
       minuteTicker: true,
       displayHtz: true
     }
@@ -47,49 +43,68 @@ export default class Index extends React.Component {
     return Index.DefaultSettings()
   }
 
-  onTimezone = (option) => {
+  onTimezone = option => {
     const { settings } = this.state
-    this.setState({
-      settings: {
-        ...settings,
-        timezones: [
-          ...settings.timezones,
-          option.value
-        ]
-      }
-    }, this.saveSettings)
+    this.setState(
+      {
+        settings: {
+          ...settings,
+          timezones: [...settings.timezones, option]
+        }
+      },
+      this.saveSettings
+    )
   }
 
-  onRemoveTimezone = (option) => {
+  onRemoveTimezone = option => {
     const { settings } = this.state
-    this.setState({
-      settings: {
-        ...settings,
-        timezones: settings.timezones.filter(tz => tz !== option)
-      }
-    }, this.saveSettings)
+    this.setState(
+      {
+        settings: {
+          ...settings,
+          timezones: settings.timezones.filter(tz => tz !== option)
+        }
+      },
+      this.saveSettings
+    )
   }
 
-  onToggle = (evt) => {
+  onToggle = evt => {
     const { name, checked } = evt.target
     const { settings } = this.state
-    this.setState({
-      settings: {
-        ...settings,
-        [name]: checked
-      }
-    }, this.saveSettings)
+    this.setState(
+      {
+        settings: {
+          ...settings,
+          [name]: checked
+        }
+      },
+      this.saveSettings
+    )
   }
 
-  render () {
+  onModal = () => {
+    this.setState(state => ({
+      modal: !state.modal
+    }))
+  }
+
+  render() {
     const { modal } = this.state
     const { timezones, minuteTicker, displayHtz } = this.state.settings
 
     return (
       <Layout>
-        {modal && <Modal onClose={() => this.setState({ modal: false })} timezones={tzOptions} />}
+        {modal && (
+          <Modal
+            onClose={this.onModal}
+            timezones={tzOptions}
+            selected={timezones}
+            onAdd={this.onTimezone}
+          />
+        )}
 
-        <h1>Zonetime <code>(beta)</code></h1>
+        <h1>Zonetime</h1>
 
         <NoSSR onSSR={<LoadingClock />}>
           <TimezoneClock
@@ -100,35 +115,23 @@ export default class Index extends React.Component {
           />
         </NoSSR>
 
-        <small className='definition'>
-          <HomeIcon fill='rgba(51, 51, 51, 0.7)' /> = your timezone (est)
-        </small>
-
-        <div className='card'>
-          <div className='opt select'>
-            <Select
-              placeholder='View more timezones...'
-              onChange={this.onTimezone}
-              options={tzOptions}
-            />
-          </div>
-
-          <label className='opt'>
+        <div className="options">
+          <label className="opt">
             <NoSSR onSSR={<Toggle checked={true} icons={false} readOnly />}>
               <Toggle
-                name='minuteTicker'
+                name="minuteTicker"
                 checked={minuteTicker}
                 onChange={this.onToggle}
                 icons={false}
               />
             </NoSSR>
-            <span>Show Minute Ticker</span>
+            <span>Minute Indicator</span>
           </label>
 
-          <label className='opt'>
+          <label className="opt">
             <NoSSR onSSR={<Toggle checked={true} icons={false} readOnly />}>
               <Toggle
-                name='displayHtz'
+                name="displayHtz"
                 checked={displayHtz}
                 onChange={this.onToggle}
                 icons={false}
@@ -136,61 +139,46 @@ export default class Index extends React.Component {
             </NoSSR>
             <span>Always Show My Timezone</span>
           </label>
+
+          <button className="opt" onClick={this.onModal}>
+            Add Timezone
+          </button>
         </div>
 
         <style jsx>{`
-          .card {
-            background: #fff;
-            border-radius: 2px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-            margin: 1em 0;
-            padding: 5px;
+          .options {
+            margin: 20px 0;
+            display: flex;
+            justify-content: flex-end;
+          }
+          .opt {
             display: flex;
             align-items: center;
-          }
-          .card label {
-            display: flex;
-            align-items: center;
-          }
-          .card label span {
-            margin-left: 5px;
-          }
-          .card .opt {
             cursor: pointer;
             margin: 0 10px;
+            padding: 8px 10px;
           }
-          .card .opt:first-child {
-            margin-left: 0;
+          .opt > span {
+            margin-left: 5px;
           }
-          .card .opt:last-child {
+          button.opt {
+            border: none;
+            font-size: 1em;
+            background: #3f51b5;
+            color: #fff;
+            box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+            border-radius: 2px;
             margin-right: 0;
           }
-          .card .select {
-            flex-grow: 1;
-          }
-          .definition {
-            display: block;
-            margin: 5px 0 0 0;
-            color: rgba(51, 51, 51, 0.7);
-          }
-          @media screen and (min-width:650px) and (max-width:900px){
-            .card .select {
-              width: 100%;
-            }
-          }
-          @media screen and (max-width:649px){
-            .card {
+          @media screen and (max-width: 699px) {
+            .options {
               flex-direction: column;
-              align-items: stretch;
             }
-            .card .opt {
-              margin: 5px 0;
+            .opt {
+              margin: 0;
             }
-            .card .opt:first-child {
-              margin-top: 0;
-            }
-            .card .opt:last-child {
-              margin-bottom: 0;
+            button.opt {
+              margin-top: 10px;
             }
           }
         `}</style>
