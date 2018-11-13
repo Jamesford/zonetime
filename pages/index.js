@@ -115,38 +115,49 @@ export default class Index extends React.Component {
         </NoSSR>
 
         <div className="options">
-          <label className="opt">
-            <NoSSR onSSR={<Toggle checked={true} icons={false} readOnly />}>
-              <Toggle
-                name="minuteTicker"
-                checked={minuteTicker}
-                onChange={this.onToggle}
-                icons={false}
-              />
-            </NoSSR>
-            <span>Minute Indicator</span>
-          </label>
+          <div className="left">
+            <button className="opt" onClick={this.onModal}>
+              Add Timezone
+            </button>
+          </div>
 
-          <label className="opt">
-            <NoSSR onSSR={<Toggle checked={true} icons={false} readOnly />}>
-              <Toggle
-                name="displayHtz"
-                checked={displayHtz}
-                onChange={this.onToggle}
-                icons={false}
-              />
-            </NoSSR>
-            <span>Always Show My Timezone</span>
-          </label>
+          <div className="right">
+            <label className="opt">
+              <NoSSR onSSR={<Toggle checked={true} icons={false} readOnly />}>
+                <Toggle
+                  name="minuteTicker"
+                  checked={minuteTicker}
+                  onChange={this.onToggle}
+                  icons={false}
+                />
+              </NoSSR>
+              <span>Minute Indicator</span>
+            </label>
 
-          <button className="opt" onClick={this.onModal}>
-            Add Timezone
-          </button>
+            <label className="opt">
+              <NoSSR onSSR={<Toggle checked={true} icons={false} readOnly />}>
+                <Toggle
+                  name="displayHtz"
+                  checked={displayHtz}
+                  onChange={this.onToggle}
+                  icons={false}
+                />
+              </NoSSR>
+              <span>Always Show My Timezone</span>
+            </label>
+          </div>
         </div>
 
         <style jsx>{`
           .options {
             margin: 20px 0;
+            display: flex;
+          }
+          .left {
+            display: flex;
+          }
+          .right {
+            flex-grow: 1;
             display: flex;
             justify-content: flex-end;
           }
@@ -154,7 +165,6 @@ export default class Index extends React.Component {
             display: flex;
             align-items: center;
             cursor: pointer;
-            margin: 0 10px;
             padding: 8px 10px;
           }
           .opt > span {
@@ -167,17 +177,18 @@ export default class Index extends React.Component {
             color: #fff;
             box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
             border-radius: 2px;
-            margin-right: 0;
           }
           @media screen and (max-width: 699px) {
-            .options {
+            .options,
+            .right {
               flex-direction: column;
             }
             .opt {
               margin: 0;
             }
             button.opt {
-              margin-top: 10px;
+              flex-grow: 1;
+              margin-bottom: 10px;
             }
           }
         `}</style>
