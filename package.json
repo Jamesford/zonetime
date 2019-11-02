@@ -14,7 +14,7 @@
     "start": "serve out"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.13",
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "next": "^7.0.2",
